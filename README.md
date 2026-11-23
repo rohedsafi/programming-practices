@@ -15,11 +15,11 @@ programming-practice/
 
 ## Topics
 
-- **C++:** [Add the topics you have practiced]
-- **HTML & CSS:** [Add the topics you have practiced]
-- **Java:** [Add the topics you have practiced]
-- **JavaScript:** [Add the topics you have practiced]
-- **Spring Boot:** [Add the topics you have practiced]
+- **C++:** 
+- **HTML & CSS:** 
+- **Java:** 
+- **JavaScript:** 
+- **Spring Boot:** 
 
 ## Purpose
 
