@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            
+            border-collapse: collapse;
+        }
+        td{
+            border: 1px solid rebeccapurple;
+            padding: 10px;
+            text-align: center;
+            min-width: 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="Container">
+        <label for="rowInput">Rows</label>
+        <input id="rowInput" type="number" min="1" value="1">
+        <br>
+        <label for="columnInput">Column</label>
+        <input id="columnInput" type="number" min="1" value="1">
+
+        <button id="generatebtn">Generate</button>
+        <button id="clearbtn">Clear</button>
+    </div>
+
+    <div id="tableContainer"></div>
+
+
+    <script src="Task1.js"></script>
+    
+</body>
+</html>

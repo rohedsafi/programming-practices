@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="auth.css">
+    <script src="auth.js" defer></script>
+</head>
+<body>
+<main class="auth-card">
+    <p class="eyebrow">SECURITY PRACTICE</p>
+    <h1>Welcome back</h1>
+    <p class="intro">Sign in with your username and password.</p>
+
+    <form data-auth-form="login">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username"
+               required minlength="1" maxlength="100">
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password"
+               required minlength="1">
+
+        <button type="submit">Sign in</button>
+        <p class="message" data-message aria-live="polite" role="status"></p>
+    </form>
+
+    <p class="switch-link">New here? <a href="signup.html">Create an account</a></p>
+</main>
+</body>
+</html>

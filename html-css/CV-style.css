@@ -1,0 +1,84 @@
+.main-body{
+    /* display: flex;
+    justify-content: center; */
+    width: 710px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left{
+    width: 200px;
+    height: 750px;
+    background-color: rgb(2, 2, 62);
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 0px;
+    box-shadow: 2px 2px 15px #434e87;
+}
+
+.profile-img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* padding: 25px; */
+    padding-bottom: 2px;
+    outline: 3px solid rgb(2, 174, 174);;
+}
+
+.name{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: white;
+
+}
+
+.job{
+    font-size: 13px;
+    text-align: center;
+    margin-top: 1px;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.Personal-info{
+    font-size: 13px;
+    color: rgb(2, 174, 174);
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.content{
+    margin-top: 30px;
+    font-size: 14px;
+    color: rgb(2, 174, 174);;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.language{
+    
+    margin-top: 30px;
+    font-size: 14px;
+    color: rgb(2, 174, 174);;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.rest-body{
+    width: 500px;
+    height: 750px;
+    background-color: rgb(226, 226, 241);
+    display: inline-block;
+    margin-left: 0px; 
+}
+
+.object{
+    padding-left: 25px;
+    padding-bottom: 0px;
+    width: 400px;
+} 
+

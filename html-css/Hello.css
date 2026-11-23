@@ -1,0 +1,90 @@
+
+            img{
+                width: 599px;
+                border-radius: 10px;
+                float: left;
+                margin-left: 5px;
+                margin-right: 20px;
+                margin-bottom: 15px; 
+            }
+            p{
+                
+                margin-top: 10px;
+            }
+            em{
+                color: rgb(251, 8, 8);
+                font-style: normal;
+            }
+            h1{
+                color: rgb(0, 0, 81);
+        
+            }
+
+            nav{
+                float: right;
+            }
+
+            div{
+                
+
+            }
+            .contact-button{
+                background-color: rgb(71, 42, 165);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                width: 110px;
+                height: 36px;
+                padding-left: 5px;
+                padding-right: 5px;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                cursor: pointer;
+                transition: opacity 0.4s;
+            }
+            .contact-button:hover{ 
+                opacity: 0.8;
+            }
+        
+            .contact-button:active{
+                opacity: 0.6;
+            }
+            .email-button{
+                background-color: rgb(19, 150, 227);
+                color: white;
+                width: 75px;
+                height: 36px;
+                border: none;
+                border-radius: 18px;
+                font-weight: bold;
+                font-size: 12px;
+                cursor: pointer;
+                margin-left: 5px;
+                transition: 0.5s;
+            }
+            .email-button:hover{
+               color: white;
+                background-color: rgb(12, 97, 202);
+                 box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.20);
+                
+            }
+            body{
+                background-color: darkgrey;
+            }
+            p{
+                font-family: Arial;
+                float: top;
+            }
+            .head_text{
+                font-size: 14px;
+            }
+            .hell_button{
+                width: 70px;
+                background-color: darkgrey;
+                border-radius: 5px;
+                border-color: rgb(86, 31, 141);;
+                border-style: solid;
+                border-width: 1.5px;
+                height: 32px;
+                margin-left: 5px;
+            }

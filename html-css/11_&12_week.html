@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Fundamentals - Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        /* Slide Container */
+        .presentation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 675px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin-bottom: 40px;
+            padding: 48px 56px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            page-break-after: always;
+        }
+
+        .slide:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Slide Number */
+        .slide-number {
+            position: absolute;
+            bottom: 24px;
+            right: 32px;
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 56px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 32px;
+            border-left: 5px solid #667eea;
+            padding-left: 20px;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #334155;
+            margin: 24px 0 16px 0;
+        }
+
+        /* Content Styling */
+        .subtitle {
+            font-size: 20px;
+            color: #64748b;
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        ul, .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li, .bullet-item {
+            padding: 12px 0 12px 28px;
+            position: relative;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        li:before, .bullet-item:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 16px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 15px;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-block code {
+            font-family: inherit;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 24px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 14px 16px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Two Column Layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin: 24px 0;
+        }
+
+        .card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 16px;
+            border-left: 4px solid #667eea;
+        }
+
+        .card h4 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 24px 0;
+            border-left: 6px solid #f59e0b;
+        }
+
+        .tip {
+            background: #e0f2fe;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        /* Grid for multiple items */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .method-card {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-4px);
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+        }
+
+        .method-card strong {
+            display: block;
+            font-size: 20px;
+            color: #667eea;
+            margin-bottom: 12px;
+        }
+
+        /* Footer/Summary */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .summary-item {
+            background: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            .slide {
+                box-shadow: none;
+                margin-bottom: 0;
+                page-break-after: always;
+                break-inside: avoid;
+            }
+            .slide:hover {
+                transform: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 32px 24px;
+            }
+            h1 {
+                font-size: 36px;
+            }
+            h2 {
+                font-size: 28px;
+            }
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- SLIDE 1: TITLE -->
+        <div class="slide">
+            <div style="display: flex; flex-direction: column; justify-content: center; min-height: 579px;">
+                <h1 style="font-size: 64px; margin-bottom: 16px;">Chapter 4:<br>JavaScript Fundamentals</h1>
+                <p class="subtitle" style="font-size: 24px; margin-bottom: 48px;">Bringing Web Pages to Life</p>
+                <div style="margin-top: auto; border-top: 2px solid #e2e8f0; padding-top: 24px;">
+                    <p style="color: #64748b;">Web Development Fundamentals Course</p>
+                </div>
+            </div>
+            <div class="slide-number">1 / 19</div>
+        </div>
+
+        <!-- SLIDE 2: INTRODUCTION -->
+        <div class="slide">
+            <h2>What is JavaScript?</h2>
+            <div class="two-columns">
+                <div>
+                    <p style="font-size: 18px; margin-bottom: 20px; line-height: 1.6;"><strong style="color: #667eea;">Role in Web Development</strong><br>
+                    High-level, dynamic programming language that runs in the browser.</p>
+                    <ul>
+                        <li>Runs directly in browser - no compilation needed</li>
+                        <li>Makes websites <strong>interactive</strong></li>
+                        <li>One of three core web technologies</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🌐 The Web Trio</h4>
+                    <p><strong>HTML</strong> → Structure (nouns)</p>
+                    <p><strong>CSS</strong> → Presentation (adjectives)</p>
+                    <p><strong style="color:#667eea">JavaScript</strong> → Behavior (verbs)</p>
+                </div>
+            </div>
+            <h3>What can JavaScript do?</h3>
+            <div class="grid-3">
+                <div class="method-card"><strong>✅ Respond</strong>to clicks & inputs</div>
+                <div class="method-card"><strong>🎨 Modify</strong>HTML/CSS dynamically</div>
+                <div class="method-card"><strong>📡 Fetch</strong>data from servers</div>
+                <div class="method-card"><strong>🎮 Create</strong>animations & games</div>
+                <div class="method-card"><strong>📱 Build</strong>mobile/web apps</div>
+                <div class="method-card"><strong>🔌 Control</strong>browser features</div>
+            </div>
+            <div class="slide-number">2 / 19</div>
+        </div>
+
+        <!-- SLIDE 3: SYNTAX & BASICS -->
+        <div class="slide">
+            <h2>JavaScript Syntax & Basics</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>Where to write JS</h3>
+                    <div class="code-block">// External (best practice)
+&lt;script src="script.js"&gt;&lt;/script&gt;
+
+// Internal
+&lt;script&gt;
+  console.log("Hello");
+&lt;/script&gt;</div>
+                </div>
+                <div>
+                    <h3>Syntax Rules</h3>
+                    <ul>
+                        <li>Case-sensitive</li>
+                        <li>Semicolons optional (but recommended)</li>
+                        <li><code>// Single line comment</code></li>
+                        <li><code>/* Multi-line */</code></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tip">
+                💡 <strong>Pro Tip:</strong> Always use external JS files for better organization and caching.
+            </div>
+            <div class="slide-number">3 / 19</div>
+        </div>
+
+        <!-- SLIDE 4: VARIABLES -->
+        <div class="slide">
+            <h2>Variables in JavaScript</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Keyword</th><th>Scope</th><th>Re-assignable?</th><th>Use Case</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>let</code></td><td>Block</td><td>✅ Yes</td><td>Values that change</td></tr>
+                        <tr><td><code>const</code></td><td>Block</td><td>❌ No</td><td>Constants, functions, arrays</td></tr>
+                        <tr><td><code>var</code></td><td>Function</td><td>✅ Yes</td><td>Avoid in modern code</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="code-block"><code>let age = 25;        // can change later<br>
+const PI = 3.14159;  // cannot be reassigned<br>
+var oldWay = "avoid"; // legacy, avoid using</code></div>
+            <div class="highlight">
+                📌 <strong>Best Practice:</strong> Use <code>const</code> by default, use <code>let</code> only when you need to reassign.
+            </div>
+            <div class="slide-number">4 / 19</div>
+        </div>
+
+        <!-- SLIDE 5: DATA TYPES -->
+        <div class="slide">
+            <h2>Data Types in JavaScript</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>string</code></td><td>Text</td><td><code>"Hello"</code>, <code>'JS'</code>, <code>`Hi`</code></td></tr>
+                        <tr><td><code>number</code></td><td>Integers & floats</td><td><code>42</code>, <code>3.14</code></td></tr>
+                        <tr><td><code>boolean</code></td><td>True/False</td><td><code>true</code>, <code>false</code></td></tr>
+                        <tr><td><code>undefined</code></td><td>Not assigned</td><td><code>let x;</code></td></tr>
+                        <tr><td><code>null</code></td><td>Intentional empty</td><td><code>let y = null;</code></td></tr>
+                        <tr><td><code>object</code></td><td>Collections</td><td><code>{name: "John"}</code></td></tr>
+                        <tr><td><code>array</code></td><td>Ordered lists</td><td><code>[1, 2, 3]</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tip">🔍 Check type: <code>typeof "hello"</code> → <code>"string"</code></div>
+            <div class="slide-number">5 / 19</div>
+        </div>
+
+        <!-- SLIDE 6: CONDITIONALS -->
+        <div class="slide">
+            <h2>Control Structures: Conditionals</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>if / else if / else</h3>
+                    <div class="code-block"><code>let score = 85;<br><br>
+if (score >= 90) {<br>
+  &nbsp;&nbsp;console.log("A");<br>
+} else if (score >= 80) {<br>
+  &nbsp;&nbsp;console.log("B");<br>
+} else {<br>
+  &nbsp;&nbsp;console.log("C");<br>
+}</code></div>
+                </div>
+                <div>
+                    <h3>Switch Statement</h3>
+                    <div class="code-block"><code>switch(day) {<br>
+  case "Monday":<br>
+  &nbsp;&nbsp;console.log("Work day");<br>
+  &nbsp;&nbsp;break;<br>
+  default:<br>
+  &nbsp;&nbsp;console.log("Weekend");<br>
+}</code></div>
+                </div>
+            </div>
+            <div class="highlight">
+                🎯 <strong>Ternary Operator:</strong> <code>let status = age >= 18 ? "Adult" : "Minor";</code>
+            </div>
+            <div class="slide-number">6 / 19</div>
+        </div>
+
+        <!-- SLIDE 7: LOOPS -->
+        <div class="slide">
+            <h2>Loops in JavaScript</h2>
+            <div class="grid-3">
+                <div class="method-card">
+                    <strong>🔁 for loop</strong>
+                    <div class="code-block" style="font-size: 13px; margin-top: 10px;">for (let i = 0; i < 5; i++) {<br>
+  &nbsp;&nbsp;console.log(i);<br>
+}</div>
+                </div>
+                <div class="method-card">
+                    <strong>⏳ while loop</strong>
+                    <div class="code-block" style="font-size: 13px; margin-top: 10px;">let i = 0;<br>
+while (i < 5) {<br>
+  &nbsp;&nbsp;console.log(i);<br>
+  &nbsp;&nbsp;i++;<br>
+}</div>
+                </div>
+                <div class="method-card">
+                    <strong>⚡ do...while</strong>
+                    <div class="code-block" style="font-size: 13px; margin-top: 10px;">let i = 0;<br>
+do {<br>
+  &nbsp;&nbsp;console.log(i);<br>
+  &nbsp;&nbsp;i++;<br>
+} while (i < 5);</div>
+                </div>
+            </div>
+            <div class="tip">
+                💡 <strong>Loop Control:</strong> <code>break</code> exits the loop, <code>continue</code> skips to next iteration
+            </div>
+            <div class="slide-number">7 / 19</div>
+        </div>
+
+        <!-- SLIDE 8: FUNCTIONS -->
+        <div class="slide">
+            <h2>Functions: Reusable Code</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>Function Declaration</h3>
+                    <div class="code-block"><code>function greet(name) {<br>
+  &nbsp;&nbsp;return `Hello, ${name}!`;<br>
+}</code></div>
+                    <h3>Function Expression</h3>
+                    <div class="code-block"><code>const add = function(a, b) {<br>
+  &nbsp;&nbsp;return a + b;<br>
+};</code></div>
+                </div>
+                <div>
+                    <h3>Arrow Function (ES6)</h3>
+                    <div class="code-block"><code>const multiply = (x, y) => x * y;<br><br>
+// With block body<br>
+const double = n => {<br>
+  &nbsp;&nbsp;return n * 2;<br>
+};</code></div>
+                </div>
+            </div>
+            <div class="highlight">
+                📌 <strong>Default Parameters:</strong> <code>function sayHi(name = "Guest") { ... }</code>
+            </div>
+            <div class="slide-number">8 / 19</div>
+        </div>
+
+        <!-- SLIDE 9: SCOPE -->
+        <div class="slide">
+            <h2>Scope: Where Variables Live</h2>
+            <div class="grid-3">
+                <div class="method-card">
+                    <strong>🌍 Global Scope</strong>
+                    <p style="font-size: 14px; margin-top: 8px;">Accessible anywhere in the code</p>
+                    <div class="code-block" style="font-size: 12px;">let globalVar = "everywhere";</div>
+                </div>
+                <div class="method-card">
+                    <strong>📦 Function Scope</strong>
+                    <p style="font-size: 14px; margin-top: 8px;">Only inside the function (var)</p>
+                    <div class="code-block" style="font-size: 12px;">function test() {<br>
+  var x = "function only";<br>
+}</div>
+                </div>
+                <div class="method-card">
+                    <strong>🔒 Block Scope</strong>
+                    <p style="font-size: 14px; margin-top: 8px;">Inside {} with let/const</p>
+                    <div class="code-block" style="font-size: 12px;">if (true) {<br>
+  let y = "block only";<br>
+}</div>
+                </div>
+            </div>
+            <div class="tip">
+                🧠 <strong>Lexical Scope:</strong> Inner functions can access variables from outer functions
+            </div>
+            <div class="slide-number">9 / 19</div>
+        </div>
+
+        <!-- SLIDE 10: ARRAYS -->
+        <div class="slide">
+            <h2>Working with Arrays</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>Creating Arrays</h3>
+                    <div class="code-block"><code>let colors = ["red", "green", "blue"];<br>
+let numbers = [1, 2, 3, 4];<br>
+let mixed = [1, "hello", true];</code></div>
+                </div>
+                <div>
+                    <h3>Accessing Elements</h3>
+                    <div class="code-block"><code>console.log(colors[0]); // "red"<br>
+colors[1] = "yellow";   // modify<br>
+console.log(colors.length); // 3</code></div>
+                </div>
+            </div>
+            <h3>Looping Through Arrays</h3>
+            <div class="code-block"><code>for (let i = 0; i < colors.length; i++) {<br>
+  &nbsp;&nbsp;console.log(colors[i]);<br>
+}<br><br>
+// Modern way:<br>
+colors.forEach(color => console.log(color));</code></div>
+            <div class="slide-number">10 / 19</div>
+        </div>
+
+        <!-- SLIDE 11: ARRAY METHODS -->
+        <div class="slide">
+            <h2>Array Methods: push(), pop(), and more</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Method</th><th>Action</th><th>Example</th><th>Returns</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>push()</code></td><td>Add to end</td><td><code>arr.push(4)</code></td><td>New length</td></tr>
+                        <tr><td><code>pop()</code></td><td>Remove from end</td><td><code>arr.pop()</code></td><td>Removed element</td></tr>
+                        <tr><td><code>unshift()</code></td><td>Add to beginning</td><td><code>arr.unshift(0)</code></td><td>New length</td></tr>
+                        <tr><td><code>shift()</code></td><td>Remove from beginning</td><td><code>arr.shift()</code></td><td>Removed element</td></tr>
+                        <tr><td><code>slice()</code></td><td>Extract portion</td><td><code>arr.slice(1, 3)</code></td><td>New array</td></tr>
+                        <tr><td><code>splice()</code></td><td>Add/Remove anywhere</td><td><code>arr.splice(1, 0, 'x')</code></td><td>Removed array</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="code-block"><code>let arr = [1, 2, 3];<br>
+arr.push(4);        // [1, 2, 3, 4]<br>
+arr.pop();          // returns 4, arr = [1, 2, 3]<br>
+arr.unshift(0);     // [0, 1, 2, 3]</code></div>
+            <div class="slide-number">11 / 19</div>
+        </div>
+
+        <!-- SLIDE 12: OBJECTS -->
+        <div class="slide">
+            <h2>Objects: Key-Value Pairs</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>Creating Objects</h3>
+                    <div class="code-block"><code>let person = {<br>
+  &nbsp;&nbsp;firstName: "John",<br>
+  &nbsp;&nbsp;lastName: "Doe",<br>
+  &nbsp;&nbsp;age: 30,<br>
+  &nbsp;&nbsp;greet() {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;console.log("Hello!");<br>
+  &nbsp;&nbsp;}<br>
+};</code></div>
+                </div>
+                <div>
+                    <h3>Accessing Properties</h3>
+                    <div class="code-block"><code>// Dot notation<br>
+person.firstName  // "John"<br><br>
+// Bracket notation<br>
+person["lastName"] // "Doe"<br><br>
+// Add new property<br>
+person.email = "john@example.com";</code></div>
+                </div>
+            </div>
+            <div class="tip">
+                🔑 Objects can contain any data type: strings, numbers, arrays, even other objects and functions!
+            </div>
+            <div class="slide-number">12 / 19</div>
+        </div>
+
+        <!-- SLIDE 13: DOM INTRODUCTION -->
+        <div class="slide">
+            <h2>Introduction to the DOM</h2>
+            <div class="two-columns">
+                <div>
+                    <p><strong>Document Object Model</strong> - Tree representation of HTML</p>
+                    <ul>
+                        <li>JavaScript can <strong>read</strong> the DOM</li>
+                        <li>JavaScript can <strong>modify</strong> the DOM</li>
+                        <li>Every HTML element becomes a <strong>node</strong></li>
+                    </ul>
+                    <div class="highlight" style="margin-top: 20px;">
+                        🎯 The <code>document</code> object is your entry point to the DOM
+                    </div>
+                </div>
+                <div>
+                    <h3>DOM Tree Example</h3>
+                    <div class="code-block" style="font-size: 13px;">html
+├── head
+│   └── title "My Page"
+└── body
+    ├── h1 "Welcome"
+    ├── p "Hello world"
+    └── div class="container"</div>
+                </div>
+            </div>
+            <div class="slide-number">13 / 19</div>
+        </div>
+
+        <!-- SLIDE 14: SELECTING ELEMENTS -->
+        <div class="slide">
+            <h2>Selecting HTML Elements</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>Method</th><th>Returns</th><th>Example</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>getElementById()</code></td><td>Single element</td><td><code>document.getElementById("main")</code></td></tr>
+                        <tr><td><code>querySelector()</code></td><td>First match</td><td><code>document.querySelector(".btn")</code></td></tr>
+                        <tr><td><code>querySelectorAll()</code></td><td>NodeList</td><td><code>document.querySelectorAll("p")</code></td></tr>
+                        <tr><td><code>getElementsByClassName()</code></td><td>HTMLCollection</td><td><code>document.getElementsByClassName("card")</code></td></tr>
+                        <tr><td><code>getElementsByTagName()</code></td><td>HTMLCollection</td><td><code>document.getElementsByTagName("div")</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="code-block"><code>let header = document.getElementById("page-title");<br>
+let firstButton = document.querySelector("button");<br>
+let allParagraphs = document.querySelectorAll("p");</code></div>
+            <div class="slide-number">14 / 19</div>
+        </div>
+
+        <!-- SLIDE 15: MODIFYING ELEMENTS -->
+        <div class="slide">
+            <h2>Modifying HTML Elements</h2>
+            <div class="grid-3">
+                <div class="method-card">
+                    <strong>📝 Change Text</strong>
+                    <div class="code-block" style="font-size: 12px;">element.textContent = "New text";<br>
+element.innerHTML = "&lt;em&gt;HTML&lt;/em&gt;";</div>
+                </div>
+                <div class="method-card">
+                    <strong>🏷️ Change Attributes</strong>
+                    <div class="code-block" style="font-size: 12px;">element.setAttribute("href", url);<br>
+element.id = "newId";<br>
+element.className = "active";</div>
+                </div>
+                <div class="method-card">
+                    <strong>🎨 Change Styles</strong>
+                    <div class="code-block" style="font-size: 12px;">element.style.color = "red";<br>
+element.style.fontSize = "20px";<br>
+element.classList.add("highlight");</div>
+                </div>
+            </div>
+            <div class="tip">
+                ⚡ <strong>classList methods:</strong> <code>add()</code>, <code>remove()</code>, <code>toggle()</code>, <code>contains()</code>
+            </div>
+            <div class="slide-number">15 / 19</div>
+        </div>
+
+        <!-- SLIDE 16: CREATING & REMOVING -->
+        <div class="slide">
+            <h2>Creating & Removing Elements</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>Create & Add</h3>
+                    <div class="code-block"><code>// Create element<br>
+let newDiv = document.createElement("div");<br>
+newDiv.textContent = "I'm new!";<br>
+newDiv.classList.add("card");<br><br>
+// Add to page<br>
+container.appendChild(newDiv);<br>
+container.prepend(newDiv);</code></div>
+                </div>
+                <div>
+                    <h3>Remove & Replace</h3>
+                    <div class="code-block"><code>// Remove element<br>
+element.remove();<br><br>
+// Or older way<br>
+element.parentNode.removeChild(element);<br><br>
+// Replace<br>
+parent.replaceChild(newEl, oldEl);</code></div>
+                </div>
+            </div>
+            <div class="highlight">
+                💡 <strong>Common pattern:</strong> Create → Configure → Add to DOM
+            </div>
+            <div class="slide-number">16 / 19</div>
+        </div>
+
+        <!-- SLIDE 17: COMPLETE EXAMPLE -->
+        <div class="slide">
+            <h2>Putting It All Together</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>HTML</h3>
+                    <div class="code-block" style="font-size: 13px;">&lt;p id="counter"&gt;0&lt;/p&gt;<br>
+&lt;button id="incrementBtn"&gt;<br>
+  &nbsp;&nbsp;Click me!<br>
+&lt;/button&gt;</div>
+                </div>
+                <div>
+                    <h3>JavaScript</h3>
+                    <div class="code-block" style="font-size: 12px;">let count = 0;<br>
+const display = document.getElementById("counter");<br>
+const btn = document.getElementById("incrementBtn");<br><br>
+btn.addEventListener("click", () => {<br>
+  &nbsp;&nbsp;count++;<br>
+  &nbsp;&nbsp;display.textContent = count;<br>
+  &nbsp;&nbsp;if (count > 5) {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;display.style.color = "red";<br>
+  &nbsp;&nbsp;}<br>
+});</div>
+                </div>
+            </div>
+            <div class="tip" style="margin-top: 16px;">
+                ✅ Each click increases the counter → Turns red after 5 clicks → Shows dynamic interaction!
+            </div>
+            <div class="slide-number">17 / 19</div>
+        </div>
+
+        <!-- SLIDE 18: SUMMARY -->
+        <div class="slide">
+            <h2>Key Takeaways</h2>
+            <div class="summary-grid">
+                <div class="summary-item">✅ JavaScript adds <strong>interactivity</strong> to websites</div>
+                <div class="summary-item">📦 Variables: <code>let</code> (mutable) and <code>const</code> (immutable)</div>
+                <div class="summary-item">📊 Data types: strings, numbers, booleans, arrays, objects</div>
+                <div class="summary-item">🎮 Control flow: <code>if/else</code>, <code>for</code>, <code>while</code></div>
+                <div class="summary-item">🔧 Functions = reusable code blocks</div>
+                <div class="summary-item">📚 Arrays have methods: <code>push()</code>, <code>pop()</code>, <code>map()</code></div>
+                <div class="summary-item">🏗️ Objects store key-value pairs</div>
+                <div class="summary-item">🌳 DOM = Document Object Model (tree structure)</div>
+                <div class="summary-item">🎯 Select elements with <code>querySelector()</code></div>
+                <div class="summary-item">✏️ Modify with <code>.textContent</code> and <code>.style</code></div>
+            </div>
+            <div class="slide-number">18 / 19</div>
+        </div>
+
+        <!-- SLIDE 19: PRACTICE EXERCISES -->
+        <div class="slide">
+            <h2>Practice Exercises</h2>
+            <div class="card" style="margin-bottom: 20px;">
+                <h4>🏆 Beginner Challenges</h4>
+                <ol style="margin-left: 20px; color: #334155;">
+                    <li>Create variables for your name, age, and city. Log them to console.</li>
+                    <li>Write a function that takes a number and returns "Even" or "Odd"</li>
+                    <li>Print all numbers from 1 to 50 that are divisible by 5</li>
+                    <li>Start with <code>[1,2,3]</code>, add 4 at end, remove first element</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h4>🚀 DOM Challenge</h4>
+                <p>Create an HTML page with:</p>
+                <ul>
+                    <li>A button that changes the background color of the page when clicked</li>
+                    <li>A text input and a "Add to List" button that adds items to a &lt;ul&gt;</li>
+                    <li>Bonus: Add delete buttons to remove each list item</li>
+                </ul>
+            </div>
+            <div class="highlight" style="margin-top: 20px; text-align: center;">
+                💻 Code along! The best way to learn JavaScript is to BUILD with it.
+            </div>
+            <div class="slide-number">19 / 19</div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .el--1{
+            background-color: aqua;
+            border-bottom-right-radius: 10px;
+        }
+        .el--2{
+            background-color: lightcoral;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .el--3{
+            background-color: lightslategray;
+            border-bottom-left-radius: 10px;
+        }
+        .el--4{
+            background-color: lightgreen;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .el--5{
+            background-color: darkorange;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .el--6{
+            background-color: crimson;
+            grid-column: 1 / 4;
+            grid-row: 2;
+            margin-right: 10px;
+            margin-left: 10px;
+            border-radius: 10px;
+
+        }
+
+        .container-1{
+            background-color: antiquewhite;
+            margin: 50px;
+            font-size: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            /* grid-template-columns: repeat(3 ,1fr); */
+            grid-template-rows: 1fr 1fr;
+            height: 300px;
+            /* gap: 20px; */
+            column-gap: 20px;
+            row-gap: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-1">
+        <div class="el el--1">div1</div>
+        <div class="el el--2">div2</div>
+        <div class="el el--3">div3</div>
+        <div class="el el--4">div4</div>
+        <div class="el el--5">div5</div>
+        <div class="el el--6">div6</div>
+    </div>
+
+    <div class="container-2">
+        <div class="el el--1"></div>
+        <div class="el el--2"></div>
+        <div class="el el--3"></div>
+        <div class="el el--4"></div>
+        <div class="el el--5"></div>
+    </div>
+
+    
+</body>
+</html>

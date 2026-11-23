@@ -1,0 +1,109 @@
+.input{
+    display: inline-block;
+}
+.channel_pic{
+     width: 50px;
+    display: inline-block;
+    vertical-align: top ;
+}
+.profile_picture{
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    object-fit: cover;
+    border-radius: 40px;
+
+}
+.video_info{
+    width: 240px;
+    display: inline-block;
+}
+
+.input{
+    width: 200px;
+    height: 32px;
+    font-size: 12px;
+    font-style: Arial;
+    box-shadow: 0px 0px 5px rgb(132, 130, 130);
+    border-radius: 10px;
+    border: none;
+    margin-left: 5px;
+    margin-top: 0px;
+
+}
+.first_text{
+    font-family: Verdana;
+    font-weight: bold;
+    font-size: 20px;
+    width: 250px;
+    margin: 0px;
+}
+.Second_text{
+    color: rgb(101, 99, 99);
+    margin-top: 2px;
+    font-family: Verdana;
+    font-size: 15px;
+    
+}
+.third_text{
+    margin-top: 17px;
+    font-family: Verdana;
+    width: 220px;
+}
+.Get_button{
+    width: 104px;
+    height: 34px;
+    background-color: rgb(0, 160, 24);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.7s;
+}
+.Get_button:hover{
+    opacity: 0.8;
+}
+.Get_button:active{
+    opacity: 0.7;
+}
+
+.view{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 15px;
+    row-gap: 30px;
+}
+ .youtube_photo{
+    width: 300px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin: none;
+    
+}
+.div_container{
+    width: 300px;
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 0px;
+    vertical-align: top;
+    padding-bottom: 10px;
+    border-radius: 5px;
+} 
+.search_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.circal{
+    background-color: rgb(32, 133, 1);
+    width: 30vh;
+    height: 30vh;
+    border-radius: 150px;
+    margin: 20px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}

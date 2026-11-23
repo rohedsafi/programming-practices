@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Form Example</title>
+  <link rel="shortcut icon" href="image/girl1.jpg " type="image/jpg">
+</head>
+<body>
+  <h1>HTML Form Example</h1>
+  <nav>
+    <a href="Hello.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="CSS_grid.html">Contact</a>
+  </nav>
+  <br>
+
+  <form style="background-color: blueviolet;">
+    <!-- Text Input -->
+    <label for="name"><strong>Name:</strong></label>
+    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+    <br/><br>
+
+    <label for="password"><strong>Password</strong></label>
+    <input type="password" id="password" placeholder="Password" minlength="6" maxlength="18">
+    <br><br>
+    
+    <label for="email"><strong>Email</strong></label>
+    <input type="email" placeholder="Enter your email">
+    <br><br>
+
+    <label for="Phone"><strong>Phone#</strong></label>
+    <input type="number" placeholder="Enter your number">
+    <br><br>
+
+    <label for="time"><strong>TIME</strong></label>
+    <input type="time" name="name" id="time">
+    <br><br>
+
+    <label for="date"><strong>DATA</strong></label>
+    <input type="date" id="date">
+
+    <br><br>
+
+    <!-- Radio Buttons -->
+    <label><strong>Gender:</strong></label>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Male</label>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Female</label>
+    <input type="radio" id="trans" name="gender" value="trans">
+    <label for="trans">Trans</label>
+    <br/><br/>
+
+    <!-- Checkboxes -->
+    <label><strong>Hobbies:</strong></label>
+    <input type="checkbox" id="reading" name="hobbies" value="reading">
+    <label for="reading">Reading</label>
+    <input type="checkbox" id="traveling" name="hobbies" value="traveling">
+    <label for="traveling">Traveling</label>
+    <input type="checkbox" id="sports" name="hobbies" value="sports">
+    <label for="sports">Sports</label>
+    <br/><br/>
+
+    <label for="comment"><strong>Comment</strong></label>
+    <input type="comment" id="comment">
+    <br><br>
+
+    <label for="contrey"><strong>Country</strong></label>
+    <select>
+      <option value="Afghanistan">Afghanistan</option>
+      <option value="India">India</option>
+      <option value="Russia">Russia</option>
+      <option value="France">France</option>
+      <option value="Germany">Germany</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="Spain">Spain</option>
+      <option value="Canada">Canada</option>
+      <option value="USA">USA</option>
+    </select>
+
+    <br><br>
+    <!-- Submit Button -->
+     <button type="reset">Reset</button>
+     <br><br>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DOM Manipulation & Advanced CSS | Complete Lecture Slide Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: #0f1724;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Presentation Container */
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Slides Wrapper */
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* Individual Slide */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2f8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 3rem;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Slide Content */
+        .slide-content {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeUp 0.5s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        .slide h1 {
+            font-size: 3.8rem;
+            background: linear-gradient(135deg, #1e3b4a, #2c6e8f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        .slide h2 {
+            font-size: 2.4rem;
+            color: #0f2c3b;
+            border-left: 6px solid #3b8db0;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .slide h3 {
+            font-size: 1.5rem;
+            color: #2c697e;
+            margin: 1rem 0 0.6rem;
+        }
+        .slide p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #2c3e44;
+            margin-bottom: 0.8rem;
+        }
+        .slide ul, .slide ol {
+            margin: 0.8rem 0 1rem 1.8rem;
+            font-size: 1rem;
+            color: #2c3e44;
+        }
+        .slide li {
+            margin: 0.5rem 0;
+        }
+
+        /* Code & Pre */
+        pre {
+            background: #1e2f3a;
+            color: #e2f0f7;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+        code {
+            background: #eef2f8;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-family: monospace;
+            color: #c44536;
+            font-size: 0.9rem;
+        }
+        .inline-code {
+            background: #e9ecef;
+            padding: 0.2rem 0.4rem;
+            border-radius: 8px;
+            font-family: monospace;
+        }
+
+        /* Tables */
+        .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .method-table th, .method-table td {
+            border: 1px solid #d4e2ec;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .method-table th {
+            background: #e3f0f5;
+            font-weight: 700;
+        }
+
+        /* Demo Box */
+        .demo-box {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            border: 1px solid #cfe0ea;
+        }
+        button.demo-btn {
+            background: #2c7da0;
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 0.3rem 0.3rem 0 0;
+        }
+        button.demo-btn:hover {
+            background: #1f617f;
+            transform: scale(1.02);
+        }
+        input, .style-input {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 2px solid #cbdbe0;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+        .result-area {
+            background: #eef2f5;
+            padding: 10px;
+            border-radius: 1rem;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+        .nav-btn {
+            background: #1e3b4a;
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-btn:hover {
+            background: #2c6e8f;
+            transform: scale(1.05);
+        }
+        .slide-indicator {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            z-index: 100;
+            font-family: monospace;
+        }
+        .badge {
+            background: #d4e6f0;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        hr {
+            margin: 1rem 0;
+            border-color: #cde0ea;
+        }
+        @media (max-width: 700px) {
+            .slide { padding: 1.5rem; }
+            .slide h1 { font-size: 2rem; }
+            .slide h2 { font-size: 1.6rem; }
+        }
+
+        /* CSS Specificity demo */
+        .specificity-demo p { color: blue; }
+        .specificity-demo .text-spec { color: green; }
+        .specificity-demo #title-spec { color: red; }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        <!-- SLIDE 1: Title -->
+        <div class="slide active" data-index="0">
+            <div class="slide-content">
+                <span class="badge">📘 Complete Lecture Series</span>
+                <h1>DOM Manipulation &<br>Advanced CSS Techniques</h1>
+                <ul>
+                    <li>🌳 DOM Manipulation & Traversing</li>
+                    <li>🎨 Dynamic Styling & classList</li>
+                    <li>🔄 AJAX & Fetch API</li>
+                    <li>⚡ CSS Specificity, Pseudo-Classes, Advanced Selectors</li>
+                </ul>
+                <div class="demo-box" style="background:#eaf4e8;">✨ Interactive slides + live code examples ready!</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: What is DOM? -->
+        <div class="slide" data-index="1">
+            <div class="slide-content">
+                <h2>🌿 Document Object Model (DOM)</h2>
+                <p>DOM represents HTML as a tree structure. JavaScript uses DOM to access & modify webpage elements dynamically.</p>
+                <pre>&lt;body&gt;
+    &lt;h1 id="title"&gt;Welcome&lt;/h1&gt;
+    &lt;p class="text"&gt;Hello Students&lt;/p&gt;
+&lt;/body&gt;</pre>
+                <p>👉 Every element becomes a node – JS can change content, styles, attributes.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: DOM Capabilities -->
+        <div class="slide" data-index="2">
+            <div class="slide-content">
+                <h2>✨ JavaScript DOM Capabilities</h2>
+                <ul>
+                    <li>✏️ Change text / HTML content</li>
+                    <li>🎨 Modify CSS styles dynamically</li>
+                    <li>➕ Add new elements</li>
+                    <li>❌ Remove existing elements</li>
+                    <li>🖱️ Handle user actions (clicks, inputs)</li>
+                </ul>
+                <div class="demo-box" id="domCapDemo">
+                    <button id="changeTextBtn" class="demo-btn">Change Text Below</button>
+                    <p id="demoParagraph">Original text: JavaScript is powerful!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4-9: Selection Methods -->
+        <div class="slide" data-index="3">
+            <div class="slide-content">
+                <h2>🔍 DOM Selection Methods</h2>
+                <table class="method-table">
+                    <tr><th>Method</th><th>Description</th></tr>
+                    <tr><td>getElementById()</td><td>Selects single element by ID</td></tr>
+                    <tr><td>getElementsByClassName()</td><td>Returns HTMLCollection by class</td></tr>
+                    <tr><td>getElementsByTagName()</td><td>Selects elements by tag name</td></tr>
+                    <tr><td>querySelector()</td><td>First match (CSS selector)</td></tr>
+                    <tr><td>querySelectorAll()</td><td>All matches (NodeList)</td></tr>
+                </table>
+                <div class="demo-box">
+                    <p id="demoId">ID element: Hello</p>
+                    <p class="demoClass">Class element 1</p>
+                    <p class="demoClass">Class element 2</p>
+                    <button id="testSelectorsBtn" class="demo-btn">Test Query Selector</button>
+                    <div id="selectorOutput" class="result-area"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10-13: Navigating / Traversing -->
+        <div class="slide" data-index="4">
+            <div class="slide-content">
+                <h2>🧭 DOM Traversing</h2>
+                <p>Move between elements using properties:</p>
+                <ul>
+                    <li><code>parentElement</code> , <code>children</code></li>
+                    <li><code>firstElementChild</code> , <code>lastElementChild</code></li>
+                    <li><code>nextElementSibling</code> , <code>previousElementSibling</code></li>
+                </ul>
+                <div class="demo-box" id="traverseDemo">
+                    <div id="traverseParent">Parent Div
+                        <p id="childPara">Child Paragraph</p>
+                        <span>Sibling Span</span>
+                    </div>
+                    <button id="showParentBtn" class="demo-btn">Show Parent of Child</button>
+                    <button id="showSiblingBtn" class="demo-btn">Show Next Sibling</button>
+                    <p id="traverseOutput"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14-21: Modifying / Creating / Removing Elements -->
+        <div class="slide" data-index="5">
+            <div class="slide-content">
+                <h2>✏️ Modifying DOM Elements</h2>
+                <pre>// Change text
+document.getElementById("title").innerHTML = "New Text";
+// Create element
+let p = document.createElement("p");
+p.innerHTML = "New paragraph";
+document.body.appendChild(p);
+// Remove element
+element.remove();</pre>
+                <div class="demo-box">
+                    <div id="modifyContainer">
+                        <p id="modifyText">Original Text</p>
+                    </div>
+                    <button id="changeTextModify" class="demo-btn">Change Text</button>
+                    <button id="addElementBtn" class="demo-btn">Add New Paragraph</button>
+                    <button id="removeLastBtn" class="demo-btn">Remove Last Added</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 22-25: classList & Dynamic Styling -->
+        <div class="slide" data-index="6">
+            <div class="slide-content">
+                <h2>🎨 classList & Dynamic Styling</h2>
+                <p><code>classList.add()</code> , <code>.remove()</code> , <code>.toggle()</code> — and direct <code>style</code> property.</p>
+                <pre>heading.style.color = "red";
+heading.classList.add("active");</pre>
+                <div class="demo-box">
+                    <p id="stylingDemoPara">This paragraph will be styled dynamically</p>
+                    <button id="addClassBtn" class="demo-btn">Add .highlight class</button>
+                    <button id="toggleBgBtn" class="demo-btn">Toggle Background</button>
+                    <button id="changeColorBtn" class="demo-btn">Change Color</button>
+                </div>
+                <style>
+                    .highlight { background-color: #ffecb3; border-radius: 12px; padding: 8px; transition: 0.2s; }
+                    .bg-blue { background-color: #b8e1fc; }
+                </style>
+            </div>
+        </div>
+
+        <!-- SLIDE 26: Button Click Example (dynamic) -->
+        <div class="slide" data-index="7">
+            <div class="slide-content">
+                <h2>🔘 Button Click + DOM Update</h2>
+                <div class="demo-box">
+                    <h1 id="clickTitle">Hello World</h1>
+                    <button id="interactiveBtn" class="demo-btn">Click Me to Change Text & Style</button>
+                </div>
+                <pre>function changeText() {
+    let heading = document.getElementById("clickTitle");
+    heading.innerHTML = "Text Changed!";
+    heading.style.color = "blue";
+}</pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 28-32: AJAX + Fetch API -->
+        <div class="slide" data-index="8">
+            <div class="slide-content">
+                <h2>🌐 AJAX & Fetch API</h2>
+                <p>Asynchronous JavaScript: fetch data without page reload.</p>
+                <pre>fetch("https://jsonplaceholder.typicode.com/users/1")
+  .then(response => response.json())
+  .then(data => console.log(data));</pre>
+                <div class="demo-box">
+                    <button id="fetchUserBtn" class="demo-btn">Fetch User Data (API)</button>
+                    <div id="apiResult" class="result-area">Click to load user info</div>
+                </div>
+                <p><small>Using JSONPlaceholder fake API.</small></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 34-35: CSS Specificity -->
+        <div class="slide" data-index="9">
+            <div class="slide-content">
+                <h2>⚖️ CSS Specificity</h2>
+                <p>Order of priority: Inline > ID > Class > Element.</p>
+                <div class="specificity-demo demo-box">
+                    <p id="title-spec" class="text-spec">This text shows specificity: ID overrides class/element.</p>
+                </div>
+                <pre>p { color: blue; }      /* element */
+.text-spec { color: green; } /* class */
+#title-spec { color: red; }  /* ID wins → red */</pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 38-41: Pseudo-Classes (hover, focus, nth-child) -->
+        <div class="slide" data-index="10">
+            <div class="slide-content">
+                <h2>🎯 Pseudo-Classes</h2>
+                <p><code>:hover</code> , <code>:focus</code> , <code>:first-child</code> , <code>:nth-child()</code></p>
+                <style>
+                    .hoverDemoBtn:hover { background-color: black; color: white; transform: scale(1.02); }
+                    .focusDemoInput:focus { border: 3px solid #3b8db0; outline: none; }
+                    .nth-child-demo li:nth-child(2) { color: #2c7a4d; font-weight: bold; }
+                </style>
+                <div class="demo-box">
+                    <button class="hoverDemoBtn demo-btn">Hover over me</button>
+                    <input class="focusDemoInput" placeholder="Click here to see :focus effect" style="margin-top:8px; width:100%;">
+                    <ul class="nth-child-demo" style="margin-top:12px;">
+                        <li>First item</li>
+                        <li>Second item (nth-child(2) styling)</li>
+                        <li>Third item</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 42-45: Pseudo-Elements (::before, ::after, ::first-letter) -->
+        <div class="slide" data-index="11">
+            <div class="slide-content">
+                <h2>✨ Pseudo-Elements</h2>
+                <p><code>::first-letter</code> , <code>::before</code> , <code>::after</code> add decorative content.</p>
+                <style>
+                    .pseudo-demo p::first-letter { font-size: 40px; color: #d9534f; font-weight: bold; }
+                    .pseudo-demo h1::before { content: "★"; color: #f0ad4e; }
+                    .pseudo-demo h1::after { content: " ✔"; color: #5cb85c; }
+                </style>
+                <div class="demo-box pseudo-demo">
+                    <h1>Special Heading</h1>
+                    <p>This paragraph has a large first letter using ::first-letter.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 46-51: Advanced CSS Selectors (Descendant, Child, Sibling, Attribute) -->
+        <div class="slide" data-index="12">
+            <div class="slide-content">
+                <h2>🔧 Advanced CSS Selectors</h2>
+                <ul>
+                    <li><strong>Descendant</strong> <code>div p</code> → all p inside div</li>
+                    <li><strong>Child</strong> <code>div > p</code> → direct child</li>
+                    <li><strong>Adjacent sibling</strong> <code>h1 + p</code></li>
+                    <li><strong>General sibling</strong> <code>h1 ~ p</code></li>
+                    <li><strong>Attribute</strong> <code>input[type="text"]</code></li>
+                </ul>
+                <style>
+                    .selector-demo div p { background: #f0f7fc; padding: 5px; border-radius: 8px; }
+                    .selector-demo .child-demo > p { border-left: 4px solid #2c7da0; }
+                </style>
+                <div class="selector-demo demo-box">
+                    <div class="child-demo">
+                        <p>Direct child paragraph (styled with child selector)</p>
+                        <span><p>Nested paragraph (not direct child)</p></span>
+                    </div>
+                    <input type="text" placeholder="Attribute selector: input[type='text']" style="width:100%; margin-top:8px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 52: Summary Slide -->
+        <div class="slide" data-index="13">
+            <div class="slide-content">
+                <h2>📚 Summary & Key Takeaways</h2>
+                <ul>
+                    <li>✅ DOM = tree structure, JS can traverse & modify</li>
+                    <li>✅ Selection: getElementById, querySelector, etc.</li>
+                    <li>✅ Modify content, create/remove elements dynamically</li>
+                    <li>✅ classList & style for dynamic styling</li>
+                    <li>✅ Fetch API for async HTTP requests</li>
+                    <li>✅ CSS Specificity hierarchy + pseudo-classes / pseudo-elements</li>
+                    <li>✅ Advanced selectors for powerful styling</li>
+                </ul>
+                <div class="demo-box">🎉 Congratulations! You've covered DOM & Advanced CSS.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevSlideBtn">◀</button>
+        <button class="nav-btn" id="nextSlideBtn">▶</button>
+    </div>
+    <div class="slide-indicator" id="slideIndicator">Slide 1 / 14</div>
+</div>
+
+<script>
+    // SLIDE NAVIGATION
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const total = slides.length;
+    const indicator = document.getElementById('slideIndicator');
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) slide.classList.add('active');
+            else slide.classList.remove('active');
+        });
+        indicator.innerText = `Slide ${currentIdx+1} / ${total}`;
+    }
+    document.getElementById('nextSlideBtn').addEventListener('click', () => {
+        if(currentIdx < total-1) { currentIdx++; updateSlides(); }
+    });
+    document.getElementById('prevSlideBtn').addEventListener('click', () => {
+        if(currentIdx > 0) { currentIdx--; updateSlides(); }
+    });
+    document.addEventListener('keydown', (e) => { if(e.key === 'ArrowRight') document.getElementById('nextSlideBtn').click(); if(e.key === 'ArrowLeft') document.getElementById('prevSlideBtn').click(); });
+
+    // ---------- INTERACTIVE DEMOS (DOM + FETCH) ----------
+    // Slide 3: Change text demo
+    const changeTextBtn = document.getElementById('changeTextBtn');
+    if(changeTextBtn) {
+        changeTextBtn.addEventListener('click', () => {
+            const demoP = document.getElementById('demoParagraph');
+            if(demoP) demoP.innerHTML = '✨ Text changed dynamically by JavaScript! DOM manipulation is awesome.';
+        });
+    }
+    // Slide 4: selector test
+    const testSelBtn = document.getElementById('testSelectorsBtn');
+    if(testSelBtn) {
+        testSelBtn.addEventListener('click', () => {
+            const byId = document.getElementById('demoId')?.innerHTML;
+            const byClass = document.querySelectorAll('.demoClass').length;
+            const output = document.getElementById('selectorOutput');
+            if(output) output.innerHTML = `✅ getElementById: "${byId}"<br>✅ .demoClass elements count: ${byClass}`;
+        });
+    }
+    // Slide traversing demo
+    const showParent = document.getElementById('showParentBtn');
+    const showSibling = document.getElementById('showSiblingBtn');
+    const traverseOut = document.getElementById('traverseOutput');
+    if(showParent) {
+        showParent.addEventListener('click', () => {
+            const child = document.getElementById('childPara');
+            if(child && traverseOut) traverseOut.innerHTML = `parentElement: ${child.parentElement?.tagName} with class/id info.`;
+        });
+        showSibling?.addEventListener('click', () => {
+            const child = document.getElementById('childPara');
+            if(child && child.nextElementSibling && traverseOut) traverseOut.innerHTML = `Next sibling: ${child.nextElementSibling.tagName} - text: ${child.nextElementSibling.innerText}`;
+            else if(traverseOut) traverseOut.innerHTML = 'No next sibling element.';
+        });
+    }
+    // Modifying elements: create/remove
+    let addedElements = [];
+    const modifyContainer = document.getElementById('modifyContainer');
+    const changeTextMod = document.getElementById('changeTextModify');
+    if(changeTextMod) {
+        changeTextMod.addEventListener('click', () => {
+            const modifyTextP = document.getElementById('modifyText');
+            if(modifyTextP) modifyTextP.innerHTML = 'Text Modified! DOM updated.';
+        });
+    }
+    const addElemBtn = document.getElementById('addElementBtn');
+    if(addElemBtn) {
+        addElemBtn.addEventListener('click', () => {
+            const newP = document.createElement('p');
+            newP.innerHTML = `New paragraph added at ${new Date().toLocaleTimeString()}`;
+            newP.style.background = "#e6f7ff";
+            newP.style.padding = "5px";
+            newP.classList.add('dynamic-added');
+            modifyContainer?.appendChild(newP);
+            addedElements.push(newP);
+        });
+    }
+    const removeLast = document.getElementById('removeLastBtn');
+    if(removeLast) {
+        removeLast.addEventListener('click', () => {
+            const lastAdded = addedElements.pop();
+            if(lastAdded && lastAdded.remove) lastAdded.remove();
+            else alert('No dynamic elements left to remove');
+        });
+    }
+    // classList & styling
+    const stylingPara = document.getElementById('stylingDemoPara');
+    const addClassBtn = document.getElementById('addClassBtn');
+    if(addClassBtn) addClassBtn.addEventListener('click', () => stylingPara?.classList.toggle('highlight'));
+    const toggleBg = document.getElementById('toggleBgBtn');
+    if(toggleBg) toggleBg.addEventListener('click', () => stylingPara?.classList.toggle('bg-blue'));
+    const changeColor = document.getElementById('changeColorBtn');
+    if(changeColor) changeColor.addEventListener('click', () => { if(stylingPara) stylingPara.style.color = stylingPara.style.color === 'red' ? 'black' : 'red'; });
+    // Button click example slide
+    const interactiveBtn = document.getElementById('interactiveBtn');
+    if(interactiveBtn) {
+        interactiveBtn.addEventListener('click', () => {
+            const heading = document.getElementById('clickTitle');
+            if(heading) {
+                heading.innerHTML = 'Text Changed! Dynamic DOM in action';
+                heading.style.color = '#2c7da0';
+                heading.style.transition = '0.2s';
+            }
+        });
+    }
+    // Fetch API demo
+    const fetchBtn = document.getElementById('fetchUserBtn');
+    if(fetchBtn) {
+        fetchBtn.addEventListener('click', () => {
+            const resultDiv = document.getElementById('apiResult');
+            if(resultDiv) resultDiv.innerHTML = 'Loading...';
+            fetch('https://jsonplaceholder.typicode.com/users/1')
+                .then(res => res.json())
+                .then(data => {
+                    if(resultDiv) resultDiv.innerHTML = `<strong>${data.name}</strong> (${data.email})<br>Company: ${data.company?.name}`;
+                })
+                .catch(err => { if(resultDiv) resultDiv.innerHTML = 'Error fetching data'; });
+        });
+    }
+    // Additional: Specificity demo already visible, but ensure no conflict
+    // Pseudo-class live demos are CSS only, but we can add extra interaction
+    console.log('DOM Manipulation & Advanced CSS Lecture Ready');
+</script>
+</body>
+</html>
+

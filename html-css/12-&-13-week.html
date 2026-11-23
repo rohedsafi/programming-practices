@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>JavaScript Masterclass: Events & Form Validation | Professional Slide Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* Better slide experience, text can still be selected but prevents accidental drag */
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: #0f1724;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Presentation container */
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Slides wrapper */
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* Individual slide */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #eef2f8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 4rem;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s;
+            box-shadow: inset 0 0 0 1000px rgba(0,0,0,0);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Slide inner content */
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeUp 0.5s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typography */
+        .slide h1 {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #1e3b4a, #2c6e8f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            color: #0f2c3b;
+            border-left: 6px solid #3b8db0;
+            padding-left: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .slide h3 {
+            font-size: 1.6rem;
+            color: #2c697e;
+            margin: 1rem 0 0.8rem;
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #2c3e44;
+            margin-bottom: 1rem;
+        }
+
+        .slide ul, .slide ol {
+            margin: 1rem 0 1rem 2rem;
+            font-size: 1.1rem;
+            color: #2c3e44;
+        }
+
+        .slide li {
+            margin: 0.6rem 0;
+        }
+
+        /* Tables */
+        .event-table, .bom-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin: 1.2rem 0;
+        }
+
+        .event-table th, .event-table td, .bom-table th, .bom-table td {
+            border: 1px solid #dce5ec;
+            padding: 12px 16px;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        .event-table th {
+            background: #e3f0f5;
+            font-weight: 700;
+            color: #1a4b5e;
+        }
+
+        /* Code blocks */
+        pre {
+            background: #1e2f3a;
+            color: #e2f0f7;
+            padding: 1rem 1.2rem;
+            border-radius: 24px;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1.2rem 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        code {
+            background: #eef2f8;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-family: monospace;
+            color: #c44536;
+            font-weight: 500;
+        }
+
+        /* Demo buttons */
+        .demo-btn {
+            background: #2c7da0;
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 0.5rem 0.5rem 0 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .demo-btn:hover {
+            background: #1f617f;
+            transform: scale(1.02);
+        }
+
+        .demo-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 1rem 0;
+        }
+
+        input, .form-input {
+            padding: 10px 16px;
+            border-radius: 40px;
+            border: 2px solid #cbdbe0;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 350px;
+            margin: 8px 0;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b8db0;
+        }
+
+        .error-msg {
+            color: #d9534f;
+            font-size: 0.9rem;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .success-msg {
+            color: #2e7d64;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: #1e3b4a;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 60px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: #2c6e8f;
+            transform: scale(1.05);
+        }
+
+        .slide-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 100;
+            font-family: monospace;
+        }
+
+        /* Card style for interactive demos inside slides */
+        .demo-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.4rem;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            margin: 1rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #d4e6f0;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 6px 0;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border-color: #cde0ea;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 1.5rem;
+            }
+            .slide h1 { font-size: 2.2rem; }
+            .slide h2 { font-size: 1.8rem; }
+            .slide p { font-size: 1rem; }
+            .nav-btn { width: 40px; height: 40px; font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        <!-- SLIDE 1: Intro to Events -->
+        <div class="slide active" data-index="0">
+            <div class="slide-content">
+                <span class="badge">Week 12 · Module 1</span>
+                <h1>🎯 Handling Browser Events with JavaScript</h1>
+                <p><strong>What is an Event?</strong> → An action that happens inside the browser: clicks, keypress, form submit, page load.</p>
+                <ul>
+                    <li>🖱️ Clicking a button</li>
+                    <li>🧲 Moving the mouse</li>
+                    <li>⌨️ Pressing a keyboard key</li>
+                    <li>📄 Submitting a form</li>
+                    <li>🌐 Webpage finishes loading</li>
+                </ul>
+                <div class="demo-card" style="background:#eaf4f8;">
+                    <p>✅ JavaScript listens to these events and triggers custom behaviors → interactivity!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Why Events Matter -->
+        <div class="slide" data-index="1">
+            <div class="slide-content">
+                <h2>🌟 Why Events are Crucial</h2>
+                <p><strong>Without events:</strong> Static websites, no interaction, just reading.</p>
+                <p><strong>With events:</strong> Real interactivity — buttons work, forms validate, games respond, menus open, dynamic updates.</p>
+                <div class="demo-card" style="background:#dcfce7;">
+                    <p>🎮 Example: a simple button that changes text → powered by 'click' event.</p>
+                    <button id="liveDemoBtnSlide2" class="demo-btn">✨ Click to interact</button>
+                    <p id="clickResponse" style="margin-top: 8px; font-weight: bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Common Browser Events Table -->
+        <div class="slide" data-index="2">
+            <div class="slide-content">
+                <h2>📋 Common Browser Events</h2>
+                <table class="event-table">
+                    <tr><th>Event</th><th>Description</th></tr>
+                    <tr><td>click</td><td>User clicks an element</td></tr>
+                    <tr><td>dblclick</td><td>Double click</td></tr>
+                    <tr><td>mouseover / mouseout</td><td>Hover effects</td></tr>
+                    <tr><td>keydown</td><td>Keyboard key pressed</td></tr>
+                    <tr><td>submit</td><td>Form submitted</td></tr>
+                    <tr><td>load</td><td>Page / resource loaded</td></tr>
+                </table>
+                <p>🔍 Also: <code>focus</code>, <code>blur</code>, <code>scroll</code>, <code>resize</code> and many more.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: addEventListener & Click Example -->
+        <div class="slide" data-index="3">
+            <div class="slide-content">
+                <h2>🔔 Event Listeners: .addEventListener()</h2>
+                <pre>element.addEventListener("click", function() {
+    alert("Button Clicked!");
+});</pre>
+                <div class="demo-group">
+                    <button id="demoAlertBtn" class="demo-btn">🔘 Click Me (Alert)</button>
+                </div>
+                <p>✅ Clean, supports multiple listeners, better control than onclick property.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Multiple Listeners + Hover demo -->
+        <div class="slide" data-index="4">
+            <div class="slide-content">
+                <h2>🎭 Multiple Event Listeners</h2>
+                <div id="hoverDemoBox" style="background:#cfe3ed; padding: 28px; text-align:center; border-radius: 32px; cursor:pointer; font-weight:bold; margin:1rem 0;">
+                    🖱️ Hover over this area
+                </div>
+                <p id="hoverStatusMsg">✨ Mouse events will be logged in console + message below</p>
+                <p><small>mouseover + mouseout listeners attached simultaneously.</small></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Event Bubbling Concept -->
+        <div class="slide" data-index="5">
+            <div class="slide-content">
+                <h2>🫧 Event Bubbling & Propagation</h2>
+                <p>Events bubble from child → parent elements. Use <code>event.stopPropagation()</code> to stop.</p>
+                <div id="bubbleParent" style="background:#bddbe8; padding: 30px; border-radius: 36px;">
+                    📦 Parent DIV
+                    <div><button id="bubbleChildBtn" class="demo-btn" style="margin-top: 10px;">Click Child Button</button></div>
+                </div>
+                <button id="toggleStopPropagation" class="demo-btn" style="background:#5f7e97;">⛔ Toggle stopPropagation (off)</button>
+                <p id="bubbleLogMsg" style="margin-top: 12px;"></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Browser Object Model (BOM) -->
+        <div class="slide" data-index="6">
+            <div class="slide-content">
+                <h2>🌐 BOM: Browser Object Model</h2>
+                <p>JavaScript can interact with the browser using BOM objects: <code>window</code>, <code>navigator</code>, <code>location</code>, <code>history</code>, <code>screen</code>.</p>
+                <div class="demo-group">
+                    <button id="showScreenInfo" class="demo-btn">📱 Screen Size</button>
+                    <button id="showLocationUrl" class="demo-btn">🔗 Current URL</button>
+                    <button id="goBackHistory" class="demo-btn">⬅️ History Back</button>
+                    <button id="openNewTab" class="demo-btn">🪟 Open Google</button>
+                </div>
+                <div id="bomOutputArea" style="background: white; border-radius: 20px; padding: 12px; margin-top: 12px;"></div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Location & History Objects -->
+        <div class="slide" data-index="7">
+            <div class="slide-content">
+                <h2>📍 Location & History Objects</h2>
+                <pre>// Get current URL
+console.log(location.href);
+// Redirect
+location.href = "https://example.com";
+// Navigate history
+history.back(); history.forward();</pre>
+                <button id="showFullUrl" class="demo-btn">Show Full URL</button>
+                <button id="fakeRedirectDemo" class="demo-btn">Preview redirect simulation</button>
+                <p><small>* Redirect simulation just shows alert, real redirect commented for safety</small></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Form Validation Introduction Week 13 -->
+        <div class="slide" data-index="8">
+            <div class="slide-content">
+                <span class="badge">Week 13 · Form Validation</span>
+                <h2>✅ What is Form Validation?</h2>
+                <p>Validation ensures user input is correct and secure before submitting.</p>
+                <ul>
+                    <li>✔️ Prevent wrong/malicious data</li>
+                    <li>✔️ Improve UX with instant feedback</li>
+                    <li>✔️ Reduce server errors & security risks</li>
+                </ul>
+                <div class="demo-card"><p><strong>Types:</strong> Client-side (browser) + Server-side (backup). Today focus: Client-side with JavaScript.</p></div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Required + Basic JS Validation -->
+        <div class="slide" data-index="9">
+            <div class="slide-content">
+                <h2>📛 Required Field Validation</h2>
+                <form id="simpleRequiredForm">
+                    <input type="text" id="requiredName" placeholder="Your full name (required)">
+                    <button type="submit" class="demo-btn">Submit</button>
+                    <div id="requiredMsg" class="error-msg"></div>
+                </form>
+                <pre>if(name == "") { alert("Required"); return false; }</pre>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Email Validation -->
+        <div class="slide" data-index="10">
+            <div class="slide-content">
+                <h2>📧 Email Validation</h2>
+                <form id="emailValidationForm">
+                    <input type="email" id="emailCheck" placeholder="you@example.com">
+                    <button type="submit" class="demo-btn">Validate Email</button>
+                    <div id="emailResultMsg" class="error-msg"></div>
+                </form>
+                <p>Rule: must contain '@' and a domain with dot.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Password & Confirm Validation -->
+        <div class="slide" data-index="11">
+            <div class="slide-content">
+                <h2>🔐 Strong Password Validation</h2>
+                <form id="passwordForm">
+                    <input type="password" id="regPassword" placeholder="Password (min 8 chars)">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                    <button type="submit" class="demo-btn">Register</button>
+                    <div id="passwordMsg" class="error-msg"></div>
+                </form>
+                <p>✅ Minimum length 8 & password match check.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Real-time Validation (keyup) -->
+        <div class="slide" data-index="12">
+            <div class="slide-content">
+                <h2>⚡ Real-time Validation</h2>
+                <input type="text" id="realtimeValidate" placeholder="Username (min 4 characters)" style="width: 100%; max-width: 400px;">
+                <p id="realtimeMsg" style="margin-top: 8px;"></p>
+                <p><code>addEventListener("keyup")</code> provides instant feedback while typing.</p>
+                <div class="badge">✨ Better UX</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Complete Form Validation Demo -->
+        <div class="slide" data-index="13">
+            <div class="slide-content">
+                <h2>🎯 Complete Registration Form</h2>
+                <form id="fullValidationForm">
+                    <input type="text" id="fullNameReg" placeholder="Full name (required)">
+                    <input type="email" id="fullEmailReg" placeholder="Email (valid format)">
+                    <input type="password" id="fullPassReg" placeholder="Password (min 6 chars)">
+                    <button type="submit" class="demo-btn">Create Account</button>
+                    <div id="fullFormValidationMsg" class="error-msg"></div>
+                </form>
+                <p>✅ Combines: required, email pattern, password length, inline messages.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: Best Practices & Summary -->
+        <div class="slide" data-index="14">
+            <div class="slide-content">
+                <h2>🏆 Best Practices & Summary</h2>
+                <ul>
+                    <li>✅ Use both client-side + server-side validation</li>
+                    <li>✅ Provide clear, friendly error messages (not only alerts)</li>
+                    <li>✅ Validate in real-time where possible</li>
+                    <li>✅ Avoid weak password rules</li>
+                    <li>✅ Prevent event bubbling issues with stopPropagation when needed</li>
+                </ul>
+                <hr>
+                <p><strong>Week 12:</strong> Browser Events, BOM (window, location, history) & Event Propagation.<br>
+                <strong>Week 13:</strong> Client-side validation, email/password checks, real-time UX.</p>
+                <div class="demo-card">🎉 Congratulations! You mastered JavaScript events and form validation.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevSlideBtn">◀</button>
+        <button class="nav-btn" id="nextSlideBtn">▶</button>
+    </div>
+    <div class="slide-indicator" id="slideIndicator">Slide 1 / 15</div>
+</div>
+
+<script>
+    // SLIDE MANAGEMENT
+    const slides = document.querySelectorAll('.slide');
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    const indicator = document.getElementById('slideIndicator');
+    
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIndex) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        indicator.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+    
+    function nextSlide() { if(currentIndex < totalSlides-1) { currentIndex++; updateSlides(); } }
+    function prevSlide() { if(currentIndex > 0) { currentIndex--; updateSlides(); } }
+    
+    document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
+    document.getElementById('prevSlideBtn').addEventListener('click', prevSlide);
+    document.addEventListener('keydown', (e) => { if(e.key === 'ArrowRight') nextSlide(); if(e.key === 'ArrowLeft') prevSlide(); });
+    
+    // -------------------- INTERACTIVE DEMOS (all independent) --------------------
+    // Slide 2 live button
+    const slide2Btn = document.getElementById('liveDemoBtnSlide2');
+    if(slide2Btn) {
+        slide2Btn.addEventListener('click', () => {
+            document.getElementById('clickResponse').innerHTML = '🎉 Button clicked! Event listener active.';
+            setTimeout(() => document.getElementById('clickResponse').innerHTML = '', 1500);
+        });
+    }
+    // Slide 4 alert demo
+    const alertBtn = document.getElementById('demoAlertBtn');
+    if(alertBtn) alertBtn.addEventListener('click', () => alert('🖱️ Click event detected! JavaScript in action.'));
+    
+    // Slide 5 hover demo
+    const hoverBoxElem = document.getElementById('hoverDemoBox');
+    const hoverStatus = document.getElementById('hoverStatusMsg');
+    if(hoverBoxElem) {
+        hoverBoxElem.addEventListener('mouseover', () => { hoverStatus.innerHTML = '🔥 mouseover event triggered!'; console.log('mouseover'); });
+        hoverBoxElem.addEventListener('mouseout', () => { hoverStatus.innerHTML = '💨 mouseout event — cursor left the box'; console.log('mouseout'); });
+    }
+    
+    // Slide 6 Bubbling demo
+    const parentDivBubble = document.getElementById('bubbleParent');
+    const childBtnBubble = document.getElementById('bubbleChildBtn');
+    const toggleStopBtn = document.getElementById('toggleStopPropagation');
+    const bubbleLog = document.getElementById('bubbleLogMsg');
+    let stopPropActive = false;
+    const parentHandler = () => { if(!stopPropActive) bubbleLog.innerHTML = '📢 Bubbling: Parent DIV received event AFTER child.'; else bubbleLog.innerHTML = '⛔ stopPropagation active — parent not triggered.'; };
+    const childHandler = (e) => { if(stopPropActive) e.stopPropagation(); bubbleLog.innerHTML = stopPropActive ? '🔘 Child clicked, propagation stopped! Parent ignored.' : '🔘 Child clicked → event bubbles to parent.'; };
+    if(parentDivBubble) parentDivBubble.addEventListener('click', parentHandler);
+    if(childBtnBubble) childBtnBubble.addEventListener('click', childHandler);
+    if(toggleStopBtn) toggleStopBtn.addEventListener('click', () => { stopPropActive = !stopPropActive; toggleStopBtn.textContent = stopPropActive ? '✅ stopPropagation ACTIVE (click child)' : '⛔ stopPropagation OFF (bubbling enabled)'; bubbleLog.innerHTML = stopPropActive ? 'Mode: stopPropagation ON. Parent will not see clicks.' : 'Mode: Bubbling ON.'; });
+    
+    // BOM interactions
+    const bomOutput = document.getElementById('bomOutputArea');
+    if(document.getElementById('showScreenInfo')) {
+        document.getElementById('showScreenInfo').addEventListener('click', () => bomOutput.innerHTML = `📐 Screen: ${screen.width}x${screen.height} px`);
+        document.getElementById('showLocationUrl').addEventListener('click', () => bomOutput.innerHTML = `🌍 Current URL: ${window.location.href}`);
+        document.getElementById('goBackHistory').addEventListener('click', () => { bomOutput.innerHTML = '⬅️ Going back...'; setTimeout(() => history.back(), 80); });
+        document.getElementById('openNewTab').addEventListener('click', () => window.open('https://google.com', '_blank'));
+        document.getElementById('showFullUrl').addEventListener('click', () => bomOutput.innerHTML = `📍 Full URL: ${location.href}`);
+        document.getElementById('fakeRedirectDemo').addEventListener('click', () => alert('📍 Redirect simulation: location.href would change (demo only).'));
+    }
+    
+    // simple required form
+    const reqForm = document.getElementById('simpleRequiredForm');
+    if(reqForm) {
+        reqForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nameVal = document.getElementById('requiredName').value.trim();
+            const msgSpan = document.getElementById('requiredMsg');
+            if(nameVal === "") { msgSpan.innerText = "❌ Name is required!"; msgSpan.style.color = "#d9534f"; }
+            else { msgSpan.innerText = "✅ Valid name (demo)"; msgSpan.style.color = "#2e7d64"; }
+        });
+    }
+    // email validation
+    const emailFormElem = document.getElementById('emailValidationForm');
+    if(emailFormElem) {
+        emailFormElem.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let email = document.getElementById('emailCheck').value.trim();
+            let msgDiv = document.getElementById('emailResultMsg');
+            if(!email.includes('@') || email.split('@')[1]?.indexOf('.') === -1) msgDiv.innerText = "❌ Invalid email. Must contain @ and domain (e.g., name@domain.com)";
+            else msgDiv.innerText = "✅ Email format valid!";
+        });
+    }
+    // password validation form
+    const pwdFormSlide = document.getElementById('passwordForm');
+    if(pwdFormSlide) {
+        pwdFormSlide.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let pwd = document.getElementById('regPassword').value;
+            let confirm = document.getElementById('confirmPassword').value;
+            let msg = document.getElementById('passwordMsg');
+            if(pwd.length < 8) { msg.innerText = "❌ Password must be at least 8 characters."; return; }
+            if(pwd !== confirm) { msg.innerText = "❌ Passwords do not match!"; return; }
+            msg.innerText = "✅ Password valid and matches!"; msg.style.color = "#2e7d64";
+        });
+    }
+    // realtime validation
+    const realtimeInputField = document.getElementById('realtimeValidate');
+    const realtimeMsgSpan = document.getElementById('realtimeMsg');
+    if(realtimeInputField) {
+        realtimeInputField.addEventListener('keyup', (e) => {
+            let val = e.target.value;
+            if(val.length >= 4) realtimeMsgSpan.innerHTML = '✅ Username looks good! (minimum 4 chars)'; else realtimeMsgSpan.innerHTML = '⚠️ Username must be at least 4 characters';
+        });
+    }
+    // full validation final form
+    const fullFormFinal = document.getElementById('fullValidationForm');
+    if(fullFormFinal) {
+        fullFormFinal.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let nameF = document.getElementById('fullNameReg').value.trim();
+            let emailF = document.getElementById('fullEmailReg').value.trim();
+            let passF = document.getElementById('fullPassReg').value;
+            let msgOut = document.getElementById('fullFormValidationMsg');
+            if(nameF === "") { msgOut.innerText = "❌ Full name required."; return; }
+            if(!emailF.includes('@') || emailF.split('@')[1]?.indexOf('.') === -1) { msgOut.innerText = "❌ Valid email needed (contains @ and domain)."; return; }
+            if(passF.length < 6) { msgOut.innerText = "❌ Password must be at least 6 characters."; return; }
+            msgOut.innerText = "🎉 All fields valid! Registration demo success."; msgOut.style.color = "#2c7a4d";
+        });
+    }
+</script>
+</body>
+</html>
+

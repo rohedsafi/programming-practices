@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li{
+            height: 30px;
+            width: 100px;
+            border-radius: 10px;
+            border: 2px solid white;
+            background-color: gray;
+            text-align: center;
+            line-height: 30px;
+            margin: 10px;
+            
+        }
+        ul{
+             display: flex;
+            flex-wrap: wrap;
+            width: 400px;
+            list-style-type: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div>
+        <ul id="sports">
+            <li id="football">Football</li>
+            <li id="cricket">Cricket</li>
+            <li id="basketball">Basketball</li>
+            <li id="tennis">Tennis</li>
+            <li id="golf">Golf</li>
+            <li id="baseball">Baseball</li>
+        </ul>
+        <p>Attempts: <span id="attempt-count">0</span></p>
+    </div>
+    <script>
+        let attempt = 0;
+        function changeColor(e){
+            console.log("button is clicked")
+           attempt++;
+           document.getElementById('attempt-count').textContent = attempt;
+            const target = e.target;
+            let colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'magenta'];
+              if(target.matches('li')){
+                target.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+              }
+
+            // if all list item color are same then show that you win
+              const listItems = document.querySelectorAll('#sports li');
+              const firstColor = listItems[0].style.backgroundColor;
+              const allSameColor = Array.from(listItems).every(item => item.style.backgroundColor === firstColor);
+              if(allSameColor){
+                alert("Congratulations! You win!");
+              }
+        }
+    document.getElementById('football').addEventListener('click', changeColor);
+    document.getElementById('cricket').addEventListener('click', changeColor);
+    document.getElementById('basketball').addEventListener('click', changeColor);
+    document.getElementById('tennis').addEventListener('click', changeColor);
+    document.getElementById('golf').addEventListener('click', changeColor);
+    document.getElementById('baseball').addEventListener('click', changeColor);
+
+    document.querySelector('#')
+</script>
+</body>
+
+</html>

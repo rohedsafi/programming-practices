@@ -1,0 +1,121 @@
+
+body{
+    margin-top: 0px;
+}
+.head{
+    background-color: antiquewhite;
+    height: 40px;
+    margin: 20px;
+    padding: 10px 20px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+div{
+    margin-top: 0px;
+    margin-left: 50px;
+    margin-right: 50px;
+    float: left;
+    width: 800px;
+}
+
+h1{
+    font-size: 25px;
+    float: left;
+    margin-top: 5px;
+    color: lightcoral;
+}
+
+h2{
+    color: lightcoral;
+}
+
+.main-img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+a{
+    color: lightcoral;
+}
+
+nav a:link{
+    font-size: 18px;
+    margin-right: 30px;
+    margin-top: 10px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+a:hover{
+    color: rgb(120, 56, 56);
+}
+
+a:active{
+    color: black;
+
+}
+
+nav a:link:last-child{
+    margin-right: 0px;
+    margin-top: 7px;
+}
+
+nav {
+    float: right;
+    width: 350px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.sign-in{
+    width: 70px;
+    height: 24px;
+    text-align: center;
+    border: none ;
+    background-color: rgb(242, 107, 107);
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgb(132, 130, 130);
+    
+}
+
+p{
+    font-size: 20px;
+}
+
+ul{
+    list-style: none;
+}
+
+.aside-section{
+    width: 320px;
+    float: left;
+    margin-top: 70px;
+    background-color: antiquewhite;
+    border-top: 5px solid orange;
+    border-bottom: 5px solid orange;
+    list-style: none;
+    padding: 12px;
+    box-sizing: border-box;
+
+}
+
+img{
+    width:60px;
+    height: 60px;
+    object-fit: cover;
+    margin-bottom: 0px;
+    display: inline-block;
+}
+
+footer{
+    background-color: aquamarine;
+    /* width: 1000px;
+    margin-left: auto;
+    margin-right: auto; */
+    text-align: center;
+}

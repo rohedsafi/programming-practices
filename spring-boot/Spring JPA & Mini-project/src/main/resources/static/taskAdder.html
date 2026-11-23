@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: url(../../image/new\ \(1\).jpg) no-repeat center center / cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           
+            height: 100vh;
+        }
+        #input-cont{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.543);
+            border-radius: 10px;   
+            margin-top: 30px;  
+                
+        }
+        #text-input{
+            margin: 0px 5px;
+            height: 30px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #5fc664;
+            text-align: center;
+            
+        }
+        #text-input:focus{
+            outline: 2px solid #5fc664;
+        }
+        #addTask{
+            background-color: #ffffff;
+            color: rgb(43, 143, 53);
+            border: 1px solid #5fc664;
+            padding: 5px 15px;
+            text-align: center;
+        
+           
+            font-size: 18px;
+            margin: 4px 0px;
+           
+            border-radius: 5px;
+        }
+        #addTask:hover{
+            background-color: #5fc664;
+            color: #ffffff;
+        }
+        .task{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            width: 300px;
+            background-color: rgba(255, 255, 255, 0.717);
+            border-radius: 10px;
+            margin-top: 10px;
+            padding: 0px 10px;
+        }
+        .task li{
+            list-style: none;
+            margin-left: 10px;
+            font-size: 18px;
+            flex: 4;
+        }
+        
+
+    </style>
+
+</head>
+<body>
+    <div id="input-cont">
+        <div>
+            <input type="text" id="text-input" placeholder="Enter a task">
+            <button id="addTask" onclick="addNewTask()">+</button>
+        </div>
+    </div>
+
+    <div id="task-cont"></div>
+
+    
+</body>
+<script src="TaskAdder.js"></script>
+    
+</html>

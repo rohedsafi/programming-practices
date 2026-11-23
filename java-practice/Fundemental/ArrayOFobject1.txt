@@ -1,0 +1,4 @@
+Name BMW  color Black
+Name Bugatti  color Blue
+Name Corolla  color white
+Name Ferrari  color orange

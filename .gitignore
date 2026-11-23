@@ -1,0 +1,127 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build and compiler output
+bin/
+out/
+build/
+dist/
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.o
+*.obj
+*.ko
+*.so
+*.so.*
+*.dll
+*.dylib
+*.exe
+*.out
+*.a
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.dSYM/
+
+# C/C++
+*.tlog
+*.idb
+*.sdf
+*.opensdf
+*.suo
+*.vcxproj.user
+Debug/
+Release/
+x64/
+x86/
+
+# Java / Maven / Gradle
+.gradle/
+.mvn/wrapper/maven-wrapper.jar
+*.log
+hs_err_pid*
+replay_pid*
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse / STS
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# JavaScript / TypeScript and frontend caches
+coverage/
+.nyc_output/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.svelte-kit/
+.vite/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Databases and local data
+*.db
+*.sqlite
+*.sqlite3
+*.mdf
+*.ldf
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# OS metadata
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# Editor metadata
+.vs/
+.history/

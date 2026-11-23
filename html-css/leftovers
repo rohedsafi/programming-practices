@@ -1,0 +1,33 @@
+<main>
+                <h2>Best 4k Wallpapers</h2>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Sit saepe ipsum, molestiae pariatur minus ratione corporis
+                    quisquam libero maiores voluptatibus asperiores omnis eligendi
+                    rerum corrupti fugit nostrum similique facilis. Nihil suscipit
+                    asperiores voluptate, ipsa eius debitis. Earum, odit. Iusto, 
+                    inventore est? Iusto repudiandae distinctio, inventore ipsam
+                    aspernatur veritatis eos nesciunt!</p>
+                    
+                    <img class="main-img" src="image/girl1.jpg" alt="">
+                    
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+                        Delectus dolores repudiandae nesciunt ex atque libero 
+                        suscipit quod voluptatibus, quidem saepe debitis architecto 
+                        dicta alias exercitationem doloremque pariatur accusamus. 
+                        Eos, ex libero enim quibusdam magni ullam voluptatibus tempora 
+                        obcaecati officia mollitia cum alias dicta. Nostrum aliquid ut 
+                        optio, autem corrupti provident.</p>
+                        
+                        <ol>
+                            <li>2k Wallpapers</li>
+                            <li>4k Wallpapers</li>
+                            <li>8k Wallpapers</li>
+                        </ol>
+                        
+                        <div class="shorts">
+                            <div class="sh first"><img src="image/nature1.png" alt=""></div>
+                            <div class="sh second"><img src="image/nature_2.jpg" alt=""></div>
+                            <div class="sh third"><img src="image/nature1.png" alt=""></div>
+                        </div>
+                        
+                    </main>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1::first-letter{
+            font-size: 50px;
+            color: blue;
+            margin-right: 10px;
+        }
+
+        p::first-letter{
+            color: brown;
+            font-size: 30px;
+        }
+
+        h2 + p::first-line{
+            color: blue;
+
+        }
+
+        h2{
+            /* background-color: orange; */
+            position: relative;
+            width: 600px;
+            font-size: 30px;
+            text-transform: uppercase;
+        }
+        /* use for after and before text */
+        h2::after{
+            content: "TOP";
+            background-color: yellow;
+            font-size: 12px;
+            display: inline-block;
+            font-weight: bold;
+            padding: 5px 5px;
+            position: absolute;
+            top: -10px;
+            right: -15px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>The is First line</h1>
+    <p>❤ Hello world</p>
+
+    <h2>This is a web page in which i am Practicing</h2>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
+       <p> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos, id! Sapiente, doloribus!</p>
+    
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- HTML -->
+<button id="myButton">Click Me!</button>
+
+<div id="edit-box" style="padding: 20px; border: 1px solid black;">
+  Double-click me to edit
+</div><br>
+
+<a id="hover-link" href="#">Hover over me</a><br>
+    
+<!-- HTML -->
+<input type="text" placeholder="Press any key here..."><br><br>
+
+<form id="myForm">
+  <input type="text" id="nameInput" placeholder="Enter your name">
+  <button type="submit">Submit</button>
+</form>
+<br>
+
+
+    <script>
+        // JavaScript
+        const button = document.getElementById("myButton");
+
+        button.addEventListener("click", function() {
+            alert("Button was clicked!");
+        });
+
+        const editBox = document.getElementById("edit-box");
+        editBox.addEventListener("dblclick", function() {
+            const newText = prompt("Enter new text:");
+            if (newText) {
+                editBox.textContent = newText;
+            }
+        });
+
+        // JavaScript
+         const link = document.getElementById('hover-link');
+
+// When the mouse enters the link's area
+        link.addEventListener('mouseover', function() {
+        link.style.color = 'red';
+        link.style.textDecoration = 'underline';
+          });
+
+// When the mouse leaves the link's area
+        link.addEventListener('mouseout', function() {
+        link.style.color = 'blue'; // Return to original color
+         link.style.textDecoration = 'none';
+        });
+
+        // JavaScript
+      document.addEventListener('keydown', function(event) {
+  // Check if the 's' key was pressed while holding Ctrl
+      if (event.ctrlKey && event.key === 's') {
+        event.preventDefault(); // Prevent the browser's default save action
+        alert('You tried to save!');
+        }
+      });
+
+      const myForm = document.getElementById('myForm');
+
+       myForm.addEventListener('submit', function(event) {
+       event.preventDefault(); // Stop the form from reloading the page
+  
+      const name = document.getElementById('nameInput').value;
+      if (name === '') {
+       alert('Please enter your name!');
+      } else {
+      alert(`Hello, ${name}! Form submitted (virtually).`);
+      // Here you would typically send the data to a server.
+  }
+});
+
+
+    </script>
+</body>
+</html>

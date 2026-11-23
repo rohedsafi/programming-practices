@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" style="margin: auto; width: 300px; padding-top: 20px;">
+        <input type="text" id="username" style="height: 25px;">
+        <input type="submit" id="submit" name=" sub">
+        <div id="message"> </div>
+    </form>
+
+    <script>
+        const input = document.getElementById("username");
+        const submit = document.getElementById("submit")
+
+        input.addEventListener( "keyup" , ()=>{
+            if(input.value.length < 4){
+                document.getElementById("message").textContent = "please enter more than 4 characters"
+                document.getElementById("message").style.color = "red"
+
+            }else if(input.value.length > 12){
+                document.getElementById("message").textContent = "The username must not be more then 12 characters"
+                document.getElementById("message").style.color = "#f08804"
+
+            }
+            else{
+                document.getElementById("message").textContent = " ✅ The input is valid"
+                document.getElementById("message").style.color = "green"
+            }
+        })
+    </script>
+</body>
+</html> 

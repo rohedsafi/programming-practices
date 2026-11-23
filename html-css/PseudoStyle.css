@@ -1,0 +1,15 @@
+#HTML{
+    color: blue;
+}
+.html{
+    color: yellow !important;
+}
+li:first-child{
+    color: brown;
+}
+li:last-child{
+    font-style: italic;
+}
+li:nth-child(even){
+    font-size: 20px;
+}
